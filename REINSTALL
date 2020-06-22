@@ -1,0 +1,20 @@
+#!/bin/bash
+# Source taken from here:
+# https://ubuntu-mate.community/t/installing-compiz-reloaded/5875
+
+read -p " Reinstall Compiz? (y/n) " -n 1 -r
+echo
+# If input is 'n', exit.
+[ $REPLY =~ ^[Nn]$ ] && exit 0
+
+echo "Uninstalling Compiz $(compiz --version)"
+./uninstall
+sudo rm -rfv /usr/lib/compiz /usr/include/compiz /usr/share/compiz /usr/share/man/man1/compiz.1.gz /usr/lib/emerald/ /usr/include/emerald /usr/share/emerald /usr/share/ccsm
+sudo rm -rfv "$HOME/src/compiz-reloaded"
+sudo apt-get install compiz
+sudo apt-get --purge autoremove 'compiz*' libdecoration0
+echo "Installing new version of Compiz from git repos"
+.//INSTALL || echo "Something went wrong, Exiting with error!" && exit 1
+echo "Reinstallation complete"
+
+exit 0
