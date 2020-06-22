@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Message function
+msg () {
+	echo "************ $1 ************"
+}
+
+# Directory where source files will be downloaded and built
+src_dir="$HOME/src/compiz-reloaded-0.8.14"
+
+mkdir -p "$src_dir"
+# Number of cpu cores available
+num_cores="$(grep -c '^processor' /proc/cpuinfo)"
+
+fetch_component () {
+	c="$1"
+        rm -rf ./"$c" ./"$c"*.tar.xz
+        while ! wget --timeout=60 "www.northfield.ws/projects/compiz/releases/0.8.14/$c-0.8.14.tar.xz"; do
+		sleep 1
+        done
+        tar -xf "$c-0.8.14.tar.xz"
+        return $!
+}
+
+# For single repo
+
+if test "$1"; then
+	cd "$src_dir"
+	fetch_component "$1" || { msg "$1 download problem"; exit 1; }
+	exit 0
+fi
+
+# Fall back to these components if none specifified
+
+# Components
+components=(compiz compiz-bcop libcompizconfig compizconfig-python ccsm compiz-plugins-main compiz-plugins-extra compiz-plugins-experimental emerald emerald-themes)
+
+# go geaux gogh
+for component in "${components[@]}"; do
+	cd "$src_dir"
+	fetch_component "$component" || { msg "$component download problem"; exit 1; }
+done
+
+exit 0

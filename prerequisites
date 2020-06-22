@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# Message function
+msg () {
+	echo "************ $1 ************"
+}
+
+# Dependencies
+dependencies=""
+dependencies+="git "
+dependencies+="build-essential "
+dependencies+="libxcomposite-dev "
+dependencies+="libpng-dev "
+dependencies+="libjpeg-dev "
+dependencies+="libsm-dev "
+dependencies+="libxrandr-dev "
+dependencies+="libxdamage-dev "
+dependencies+="libxi-dev "
+dependencies+="libxinerama-dev "
+dependencies+="libstartup-notification0-dev "
+dependencies+="libgl1-mesa-dev "
+dependencies+="libglu1-mesa-dev "
+dependencies+="librsvg2-dev "
+dependencies+="libdbus-1-dev "
+dependencies+="libdbus-glib-1-dev "
+dependencies+="libgtk2.0-dev "
+dependencies+="libgtk-3-dev "
+dependencies+="autoconf "
+dependencies+="automake "
+dependencies+="libtool "
+dependencies+="intltool "
+dependencies+="gettext "
+dependencies+="autopoint "
+dependencies+="libxslt1-dev "
+dependencies+="xsltproc "
+dependencies+="libwnck-dev "
+dependencies+="python-dev "
+dependencies+="libxss-dev "
+dependencies+="libcairo2-dev "
+dependencies+="libpango1.0-dev "
+dependencies+="libprotobuf-dev "
+dependencies+="protobuf-compiler "
+dependencies+="libnotify-dev "
+dependencies+="python-gi "
+dependencies+="python-gi-cairo "
+dependencies+="gir1.2-gtk-3.0 "
+dependencies+="gir1.2-gdkpixbuf-2.0 "
+dependencies+="gir1.2-pango-1.0 "
+dependencies+="cython "
+# For gtk-window-decorator marco theme support
+dependencies+="libmarco-dev "
+# For emerald with gtk3
+dependencies+="libwnck-3-dev "
+# For compiz earth plugin
+dependencies+="libcurl4-openssl-dev "
+dependencies+="libglew-dev"
+
+sudo apt-get update
+
+if [ -f /etc/debian_version ]; then
+	# Install dependencies for ubuntu based distributions
+	msg "Installing dependencies"
+	sudo apt-get install $dependencies
+else
+	msg "Debian based distribution not detected"
+	msg "Please install the following packages:"
+	msg "$dependencies"
+fi

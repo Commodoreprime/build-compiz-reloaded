@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# This is an executable script
+
+cd "$(dirname "$(readlink /proc/$$/fd/255)")"
+
+die () {
+	echo "$1: Problem encountered while installing compiz"
+	exit 1
+}
+
+# Components
+components=(compiz compiz-bcop libcompizconfig compizconfig-python ccsm compiz-plugins-main compiz-plugins-extra compiz-plugins-experimental emerald emerald-themes)
+
+./prerequisites	|| die "prerequisites"
+
+for c in "${components[@]}"; do
+	./fetch "$c"	|| die "fetch"
+	./build "$c"	|| die "build"
+	./install "$c"	|| die "install"
+done
+echo "Don't forget to restart compiz and configure ccsm. $(tput setaf 4)E$(tput setaf 1)n$(tput setaf 3)j$(tput setaf 4)o$(tput setaf 2)y$(tput setaf 1)!$(tput sgr0) :-)"
+
+exit 0
