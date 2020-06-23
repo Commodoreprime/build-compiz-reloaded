@@ -37,12 +37,9 @@ if test "$1"; then
 	exit 0
 fi
 
-# Components
-components=(compiz compiz-bcop libcompizconfig compizconfig-python ccsm compiz-plugins-main compiz-plugins-extra compiz-plugins-experimental emerald emerald-themes)
-
-# go geaux gogh
-for component in "${components[@]}"; do
-	install_component "$component" || { msg "$component installation failed" && exit 1; }
-done
+while read component; do
+	cd "$src_dir"
+	install_component "$component" || { msg "$component failed to install"; exit 1; }
+done < ./components.list
 
 exit 0

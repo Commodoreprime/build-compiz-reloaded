@@ -35,9 +35,9 @@ fi
 # Components
 components=(compiz compiz-bcop libcompizconfig compizconfig-python ccsm compiz-plugins-main compiz-plugins-extra compiz-plugins-experimental emerald emerald-themes)
 
-# Uninstall all
-for component in "${components[@]}"; do
-	uninstall_component "$component" || { msg "$component removal failed" && exit 1; }
-done
+while read component; do
+	cd "$src_dir"
+	uninstall_component "$component" || { msg "$component failed to uninstall"; exit 1; }
+done < ./components.list
 
 exit 0

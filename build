@@ -39,12 +39,8 @@ if test "$1"; then
 	exit 0
 fi
 
-# Components
-components=(compiz compiz-bcop libcompizconfig compizconfig-python ccsm compiz-plugins-main compiz-plugins-extra compiz-plugins-experimental emerald emerald-themes)
-
-# Core loop
-for component in "${components[@]}"; do
+while read component; do
 	build_component "$component" || { msg "$c compilation failed" && exit 1; }
-done
+done < ./components.list
 
 exit 0

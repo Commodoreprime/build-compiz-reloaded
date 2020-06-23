@@ -30,15 +30,9 @@ if test "$1"; then
 	exit 0
 fi
 
-# Fall back to these components if none specifified
-
-# Components
-components=(compiz compiz-bcop libcompizconfig compizconfig-python ccsm compiz-plugins-main compiz-plugins-extra compiz-plugins-experimental emerald emerald-themes)
-
-# go geaux gogh
-for component in "${components[@]}"; do
+while read component; do
 	cd "$src_dir"
 	fetch_component "$component" || { msg "$component download problem"; exit 1; }
-done
+done < ./components.list
 
 exit 0
