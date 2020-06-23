@@ -32,9 +32,6 @@ if test "$1"; then
 	exit 0
 fi
 
-# Components
-components=(compiz compiz-bcop libcompizconfig compizconfig-python ccsm compiz-plugins-main compiz-plugins-extra compiz-plugins-experimental emerald emerald-themes)
-
 while read component; do
 	cd "$src_dir"
 	uninstall_component "$component" || { msg "$component failed to uninstall"; exit 1; }
